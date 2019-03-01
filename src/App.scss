@@ -1,0 +1,12 @@
+@import "./sass/variables";
+@import "./sass/generic/generic.reset";
+@import "./sass/generic/generic.fonts";
+
+html {
+  box-sizing: border-box;
+  font-size: $base-font-size;
+}
+
+body {
+  font-family: $base-font;
+}

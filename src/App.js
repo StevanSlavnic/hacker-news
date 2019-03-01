@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
 import logo from './logo.svg';
-import './App.css';
+import './App.scss';
 
 
 import * as container from './containers/indexContainers';
@@ -12,8 +12,6 @@ class App extends Component {
 
     const loadingApp = this.props.loadingApp;
 
-    console.log(loadingApp)
-
     // public routes
 		let publicRoutes = [
       { path: '/news', component: container.News },
@@ -22,7 +20,6 @@ class App extends Component {
     ];
 
     let routes = [ ...publicRoutes ];
-    console.log(routes)
 
     let redirection = <Redirect to={'/news'} />;
     
