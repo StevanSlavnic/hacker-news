@@ -38,6 +38,8 @@ hr {
 }
 
 a {
+    text-decoration: none;
+    
     &:hover {
         color: $color-secondary;
     }

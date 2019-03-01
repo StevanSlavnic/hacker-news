@@ -1,0 +1,24 @@
+@import "../../../sass/variables";
+
+.Header {
+    height: 60px;
+    background-color: $color-white;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-bottom: 1px solid $color-secondary;
+
+    a {
+        color: $color-main;
+
+        &:hover {
+            color: $color-secondary;
+        }
+    }
+
+    nav {
+        a {
+            margin-left: 20px;
+        }
+    }
+}
