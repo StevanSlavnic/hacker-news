@@ -14,16 +14,10 @@ export const getTopStories = () => {
 	return axiosInstance.get(url);
 };
 
-export const getSingleStory = (id) => {
+export const getItem = (id) => {
 	
 	const url = '/item/' + id + '.json';
 
 	return axiosInstance.get(url, id);
 };
 
-export const getComments = (id) => {
-	
-	const url = '/item/' + id + '.json';
-
-	return axiosInstance.get(url, id);
-};

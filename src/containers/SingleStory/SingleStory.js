@@ -8,30 +8,24 @@ class SingleStory extends Component {
         singleStory: null
      }
 
-    
-
     componentDidMount() {
-        var id = this.props.location.pathname.split("/").slice(-1)[0];
+        let id = this.props.location.pathname.split("/").slice(-1)[0];
 
         storiesService
-                .getSingleStory(id)
-                .then((response) => {
-                    this.setState({
-                        singleStory: response.data
-                    })
+            .getItem(id)
+            .then((response) => {
+                this.setState({
+                    singleStory: response.data
                 })
-                .catch((error) => {
-                    console.log(error.response);
-                });
-        }
-    
-
+            })
+            .catch((error) => {
+                console.log(error.response);
+            });
+    }
    
     render() {
         
         const singleStory = this.state.singleStory;
-
-        console.log(singleStory)
         
         return ( 
             <div className={classes.singleStoryWrap}>
@@ -49,15 +43,6 @@ class SingleStory extends Component {
 
                 <div>
                     Author: {singleStory && singleStory.by}
-                </div>
-                <div>
-                    Comments: 
-                    <div>
-                    {/* {singleStory && singleStory.kids.map(kid => {
-                        return kid
-    
-                })} */}
-                    </div>
                 </div>
             </div>
         );
