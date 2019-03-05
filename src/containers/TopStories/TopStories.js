@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { itemsFetchData } from "../../store/actions/itemsAction";
 
-import CircularProgress from "@material-ui/core/CircularProgress";
-import * as storiesService from "../../services/stories/storiesService";
+import classes from "./TopStories.module.scss";
+import GridList from "../../components/GridList/GridList";
 import SingleStory from "../SingleStory/SingleStory";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 class TopStories extends Component {
   state = {};
@@ -19,7 +19,7 @@ class TopStories extends Component {
   render() {
     const topStories = this.props.items.items ? this.props.items.items : [];
 
-    const storyRender = topStories.slice(0, 3).map(function(item) {
+    const storyRender = topStories.slice(0, 50).map(function(item) {
       return (
         <div key={item}>
           <SingleStory>{item}</SingleStory>
@@ -27,7 +27,11 @@ class TopStories extends Component {
       );
     });
 
-    return <div>{storyRender}</div>;
+    return (
+      <div className={classes.NewsWrapper}>
+        <GridList className={classes.GridList}>{storyRender}</GridList>
+      </div>
+    );
   }
 }
 

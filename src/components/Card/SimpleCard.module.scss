@@ -1,0 +1,9 @@
+@import "../../../sass/variables";
+
+.Card {
+	max-width: 570px;
+	padding: 56px 100px;
+	background-color: $color-white;
+	box-shadow: $shadow-main;
+    margin-bottom: 40px;
+}

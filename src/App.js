@@ -14,7 +14,7 @@ class App extends Component {
     let publicRoutes = [
       { path: "/news", component: container.News },
       { path: "/top-stories", exact: true, component: container.TopStories },
-      { path: "/top-story/:id", component: container.Comments },
+      { path: "/:id/comments", component: container.Comments }
     ];
 
     let routes = [...publicRoutes];
