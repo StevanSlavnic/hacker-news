@@ -5,32 +5,31 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import * as storiesService from "../../services/stories/storiesService";
 import { classes } from "coa";
 
-
 class SingleStory extends Component {
   state = {
     singleStory: {}
   };
 
   componentDidMount() {
-    this.renderItem();
+    this.fetchItem();
   }
 
-  renderItem = () => {
-      const id = this.props.children;
-      storiesService.getItem(id)
-        .then((response) => {
-            this.setState({singleStory: response.data});
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-  }
+  fetchItem = () => {
+    const id = this.props.children;
+    storiesService
+      .getItem(id)
+      .then(response => {
+        this.setState({ singleStory: response.data });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
 
   render() {
     const singleStory = this.state.singleStory;
 
     return (
-
       <div>
         {!singleStory ? (
           <CircularProgress />
@@ -45,9 +44,7 @@ class SingleStory extends Component {
             <div>Author: {singleStory.by}</div>
 
             <div>
-              <Link to={'/top-story/' + singleStory.id}>
-                Comments
-              </Link>
+              <Link to={"/top-story/" + singleStory.id}>Comments</Link>
             </div>
 
             <div>type: {singleStory.type}</div>

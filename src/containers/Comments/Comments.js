@@ -1,43 +1,52 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
-import CircularProgress from '@material-ui/core/CircularProgress';
-import * as storiesService from '../../services/stories/storiesService';
-import classes from './../Comments/Comments.module.scss';
+import CircularProgress from "@material-ui/core/CircularProgress";
+import * as storiesService from "../../services/stories/storiesService";
+import classes from "./../Comments/Comments.module.scss";
 
-import Comment from './Comment'
+import Comment from "./Comment";
 
 class Comments extends Component {
-    state = { 
-        comments: null
-    }
+  state = {
+    comments: []
+  };
 
-    componentDidMount() {
-    }
+  componentDidMount() {
+    this.fetchItem();
+  }
 
-    
-     
-    render() { 
+  fetchItem = () => {
+    const id = this.props.location.pathname.split("/").slice(-1)[0];
 
-        const comments = this.props;
-
-        console.log("comments", comments);
-    
-        const commentRender = comments.slice(0, 20).map(function(item){
-          return <Comment key={item} className="items-list-item">
-            {item}
-          </Comment>
-    
-          
+    console.log(id);
+    storiesService
+      .getItem(id)
+      .then(response => {
+        const data = response.data;
+        this.setState({ comments: data.kids });
       })
+      .catch(error => {
+        console.log(error);
+      });
+  };
 
-        // const comments = this.state.comments;
+  render() {
+    const comments = this.state.comments;
 
-        // console.log(this.props)
+    console.log("comments", comments);
 
-        return ( <div>
-            {commentRender}
-        </div> );
-    }
+    const commentsList =
+      comments &&
+      comments.map(function(item) {
+        return (
+          <div key={item}>
+            <Comment>{item}</Comment>
+          </div>
+        );
+      });
+
+    return <div>{commentsList}</div>;
+  }
 }
- 
+
 export default Comments;

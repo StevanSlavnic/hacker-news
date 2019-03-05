@@ -19,65 +19,28 @@ class TopStories extends Component {
   render() {
     const topStories = this.props.items.items ? this.props.items.items : [];
 
-    // console.log("Top stories",);
+    const storyRender = topStories.slice(0, 3).map(function(item) {
+      return (
+        <div key={item}>
+          <SingleStory>{item}</SingleStory>
+        </div>
+      );
+    });
 
-    const story = topStories.slice(0, 20).map(function(item){
-      return <SingleStory key={item} className="items-list-item">
-        {item}
-      </SingleStory>
-
-      
-  })
-
-  // console.log(Object.values(story.map(item => item.key)))
-
-    return (
-      <div>
-        
-        {story}
-        
-      </div>
-
-      // <div>
-      //     {!topStories ? <CircularProgress/> : <StoriesList>
-      //         <React.Fragment>
-      //             {topStories && topStories.map(story => {
-      //             return <div key={story.id}>
-      //             <div>
-      //                 <a href={'/single-story/' + story.id} target="_blank" rel="noopener">
-      //                     Titile: {story.title}
-      //                 </a>
-      //             </div>
-      //             <div>
-      //                 Author: {story.by}
-      //             </div>
-
-      //             <div>
-      //             Score: {story.score}
-      //             </div>
-
-      //             <Link to={'/top-stories/' + story.id + '/comments'}>
-      //                 comments
-      //             </Link>
-      //         </div>
-      //         })}
-      //         </React.Fragment>
-      //     </StoriesList> }
-      // </div>
-    );
+    return <div>{storyRender}</div>;
   }
 }
 
 const mapStateToProps = state => {
   return {
     items: state.items,
-    isLoading: state.itemsIsLoading,
+    isLoading: state.itemsIsLoading
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchData: url => dispatch(itemsFetchData(url)),
+    fetchData: url => dispatch(itemsFetchData(url))
   };
 };
 
