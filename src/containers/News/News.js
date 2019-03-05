@@ -1,82 +1,87 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { itemsFetchData } from "../../store/actions/itemsAction";
 
-import * as storiesService from '../../services/stories/storiesService';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import StoriesList from '../../components/ItemsList/ItemsList';
+import * as storiesService from "../../services/stories/storiesService";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import StoriesList from "../../components/ItemsList/ItemsList";
+import SingleStory from "../SingleStory/SingleStory";
+import ItemsList from "../../components/ItemsList/ItemsList";
 
 class News extends Component {
-    state = { 
-        loading: true,
-        newStories: null,
-    }
+  state = {};
 
-    async componentDidMount() {
-        let ids = await this.fetchNewStories();
+  componentDidMount() {
+    this.props.fetchData(
+      "https://hacker-news.firebaseio.com/v0/newstories.json"
+    );
 
-        const stories = ids && ids.slice(0,20).map(this.fetchSingleStory);
+    // this.setState({ items: this.props.items });
+  }
 
-        const promise = await Promise.all(stories).then(results => results.map(result => {
-            return result
-        }));
+  render() {
+    const newStories = this.props.items;
 
-        this.setState({newStories: promise})
-    }
-    
+    const items = newStories.items;
 
-	fetchNewStories = () => {
-		return storiesService
-			.getNewStories()
-			.then((response) => {
-                return response.data
-            })
-			.catch((error) => {
-				console.log(error.response);
-            });
-            
-    };
-    
-    fetchSingleStory = (id) => {
-        return storiesService
-			.getItem(id)
-			.then((response) => {
-                return response.data
-            })
-			.catch((error) => {
-				console.log(error.response);
-            });
-    }
+    console.log("New stories", newStories.items);
 
-    render() { 
+    return (
+      <div>
+        {items}
+        <SingleStory items={this.props.items} />
+        {/* {newStories.map(item => (
+          <SingleStory key={item} id={item} />
+        ))} */}
+      </div>
 
-        const newStories = this.state.newStories;
-        
-        return ( 
-            <div>
-                {!newStories ? <CircularProgress/> : <StoriesList>
-                    <React.Fragment>
-                    {newStories && newStories.map(story => {
-                    return <div key={story.id}>
-                        <div>
-                            <a href={story.url} target="_blank" rel="noopener">
-                                Titile: {story.title}
-                            </a>
-                        </div>
-                        <div>
-                            Author: {story.by}
-                        </div>
-                        <div>
-                            Number of comments: {story.descendants ? story.descendants : '0' }
-                        </div>
-                        <div>
-                           Score: {story.score}
-                        </div>
-                    </div>
-                })}
-                </React.Fragment>
-                </StoriesList> }
-            </div>
-         );
-    }
+      // <div>
+      //   {!newStories ? (
+      //     <CircularProgress />
+      //   ) : (
+      //     <StoriesList>
+      //       <React.Fragment>
+      //         {newStories &&
+      //           newStories.map(story => {
+      //             return (
+      //               <div key={story.id}>
+      //                 <div>
+      //                   <a href={story.url} target="_blank" rel="noopener">
+      //                     Titile: {story.title}
+      //                   </a>
+      //                 </div>
+      //                 <div>Author: {story.by}</div>
+      //                 <div>
+      //                   Number of comments:{" "}
+      //                   {story.descendants ? story.descendants : "0"}
+      //                 </div>
+      //                 <div>Score: {story.score}</div>
+      //               </div>
+      //             );
+      //           })}
+      //       </React.Fragment>
+      //     </StoriesList>
+      //   )}
+      // </div>
+    );
+  }
 }
- 
-export default News;
+
+const mapStateToProps = state => {
+  return {
+    items: state.items,
+    // hasErrored: state.itemsHasErrored,
+    isLoading: state.itemsIsLoading
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchData: url => dispatch(itemsFetchData(url))
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(News);
