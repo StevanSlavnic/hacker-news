@@ -1,42 +1,38 @@
 import React, { Component } from "react";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import { Link } from "react-router-dom";
 
+import CircularProgress from "@material-ui/core/CircularProgress";
 import * as storiesService from "../../services/stories/storiesService";
 import { classes } from "coa";
 
+
 class SingleStory extends Component {
   state = {
-    singleStory: []
+    singleStory: {}
   };
 
   componentDidMount() {
-    // storiesService
-    //   .getItem(this.props.id)
-    //   .then(response => {
-    //     console.log(response.data);
-    //     this.setState({
-    //       singleStory: response.data
-    //     });
-    //   })
-    //   .catch(error => {
-    //     console.log(error.response);
-    //   });
+    this.renderItem();
+  }
 
-    this.setState({
-      singleStory: this.props.items
-    });
+  renderItem = () => {
+      const id = this.props.children;
+      storiesService.getItem(id)
+        .then((response) => {
+            this.setState({singleStory: response.data});
+        })
+        .catch((error) => {
+          console.log(error);
+        });
   }
 
   render() {
-    // const singleStory = this.state.singleStory;
-    const singleStories = this.props.items.items;
-
-    console.log(singleStories);
+    const singleStory = this.state.singleStory;
 
     return (
-      // <div />
+
       <div>
-        {/* {!singleStory ? (
+        {!singleStory ? (
           <CircularProgress />
         ) : (
           <div className={classes.singleStoryWrap}>
@@ -48,11 +44,15 @@ class SingleStory extends Component {
 
             <div>Author: {singleStory.by}</div>
 
-            <div>comments: {singleStory.kids}</div>
+            <div>
+              <Link to={'/top-story/' + singleStory.id}>
+                Comments
+              </Link>
+            </div>
 
             <div>type: {singleStory.type}</div>
           </div>
-        )} */}
+        )}
       </div>
     );
   }
