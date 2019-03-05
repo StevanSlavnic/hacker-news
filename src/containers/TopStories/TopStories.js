@@ -1,91 +1,80 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { itemsFetchData } from "../../store/actions/itemsAction";
 
-import CircularProgress from '@material-ui/core/CircularProgress';
-import * as storiesService from '../../services/stories/storiesService';
-import StoriesList from '../../components/ItemsList/ItemsList';
-
+import CircularProgress from "@material-ui/core/CircularProgress";
+import * as storiesService from "../../services/stories/storiesService";
+import StoriesList from "../../components/ItemsList/ItemsList";
+import SingleStory from "../SingleStory/SingleStory";
 
 class TopStories extends Component {
-    state = { 
-        loading: true,
-        topStories: null,
-        storyId: null,
-        // comments: null
-    }
+  state = {};
 
+  componentDidMount() {
+    this.props.fetchData(
+      "https://hacker-news.firebaseio.com/v0/topstories.json"
+    );
+  }
 
-    async componentDidMount() {
-        let ids = await this.fetchTopStories();
+  render() {
+    const topStories = this.props.items;
 
-        const stories = ids && ids.slice(0,20).map(this.fetchSingleStory);
+    const items = topStories.items;
 
-        const promise = await Promise.all(stories).then(results => results.map(result => {
-            return result
-        }));
+    console.log("Top stories", items);
 
-        this.setState({ topStories: promise})
-            
-    }
+    return (
+      <div>
+        {items}
+        {/* {topStories &&
+          topStories.items.map(item => <SingleStory key={item} id={item} />)} */}
+      </div>
 
-    fetchTopStories = () => {
-		return storiesService
-			.getTopStories()
-			.then((response) => {
-                return response.data
-            })
-			.catch((error) => {
-				console.log(error.response);
-            });
-            
-    };
-    
-    fetchSingleStory = (id) => {
-        return storiesService
-            .getItem(id)
-			.then((response) => {
-                return response.data
-            })
-			.catch((error) => {
-				console.log(error.response);
-            });
-    }
+      // <div>
+      //     {!topStories ? <CircularProgress/> : <StoriesList>
+      //         <React.Fragment>
+      //             {topStories && topStories.map(story => {
+      //             return <div key={story.id}>
+      //             <div>
+      //                 <a href={'/single-story/' + story.id} target="_blank" rel="noopener">
+      //                     Titile: {story.title}
+      //                 </a>
+      //             </div>
+      //             <div>
+      //                 Author: {story.by}
+      //             </div>
 
-    render() { 
+      //             <div>
+      //             Score: {story.score}
+      //             </div>
 
-        const topStories = this.state.topStories;
-
-        console.log(topStories)
-        
-        return ( 
-            <div>
-                {!topStories ? <CircularProgress/> : <StoriesList>
-                    <React.Fragment>
-                        {topStories && topStories.map(story => {
-                        return <div key={story.id}>
-                        <div>
-                            <a href={'/single-story/' + story.id} target="_blank" rel="noopener">
-                                Titile: {story.title}
-                            </a>
-                        </div>
-                        <div>
-                            Author: {story.by}
-                        </div>
-                        
-                        <div>
-                        Score: {story.score}
-                        </div>
-
-                        <Link to={'/top-stories/' + story.id + '/comments'}>
-                            comments
-                        </Link>
-                    </div>
-                    })}
-                    </React.Fragment>
-                </StoriesList> }
-            </div>
-         );
-    }
+      //             <Link to={'/top-stories/' + story.id + '/comments'}>
+      //                 comments
+      //             </Link>
+      //         </div>
+      //         })}
+      //         </React.Fragment>
+      //     </StoriesList> }
+      // </div>
+    );
+  }
 }
 
-export default TopStories;
+const mapStateToProps = state => {
+  return {
+    items: state.items,
+    isLoading: state.itemsIsLoading
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchData: url => dispatch(itemsFetchData(url))
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(TopStories);
