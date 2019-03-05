@@ -2,11 +2,10 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { itemsFetchData } from "../../store/actions/itemsAction";
 
-import * as storiesService from "../../services/stories/storiesService";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import StoriesList from "../../components/ItemsList/ItemsList";
 import SingleStory from "../SingleStory/SingleStory";
-import ItemsList from "../../components/ItemsList/ItemsList";
+import GridList from "../../components/GridList/GridList";
+import classes from "./News.module.scss";
 
 class News extends Component {
   state = {};
@@ -23,14 +22,18 @@ class News extends Component {
     const newStories = this.props.items.items ? this.props.items.items : [];
 
     const storyRender = () =>
-      newStories.slice(0, 3).map(function(item) {
+      newStories.slice(0, 50).map(function(item) {
         return (
           <div key={item}>
             <SingleStory>{item}</SingleStory>
           </div>
         );
       });
-    return <div>{storyRender()}</div>;
+    return (
+      <div className={classes.NewsWrapper}>
+        <GridList className={classes.GridList}>{storyRender()}</GridList>
+      </div>
+    );
   }
 }
 

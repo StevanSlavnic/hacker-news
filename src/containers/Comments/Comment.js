@@ -28,17 +28,21 @@ class Comment extends Component {
   render() {
     const comment = this.state.comment;
 
+    function createMarkup() {
+      return { __html: comment.text };
+    }
+
     return (
       <div>
         {!comment ? (
           <CircularProgress />
         ) : (
-          <div className={classes.singleStoryWrap}>
-            <div>Comment: {comment.text}</div>
-
-            <div>Author: {comment.by}</div>
-
-            <div>type: {comment.type}</div>
+          <div className={classes.CommentWrap}>
+            <div
+              className={classes.Comment}
+              dangerouslySetInnerHTML={createMarkup()}
+            />
+            <div className={classes.Author}>{comment.by}</div>
           </div>
         )}
       </div>

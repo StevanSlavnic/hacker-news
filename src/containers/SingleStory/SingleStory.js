@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
+import SimpleCard from "../../components/Card/SimpleCard";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import * as storiesService from "../../services/stories/storiesService";
-import { classes } from "coa";
+import classes from "./SingleStory.module.scss";
 
 class SingleStory extends Component {
   state = {
@@ -30,25 +31,41 @@ class SingleStory extends Component {
     const singleStory = this.state.singleStory;
 
     return (
-      <div>
+      <div className={classes.SingleStory}>
         {!singleStory ? (
           <CircularProgress />
         ) : (
-          <div className={classes.singleStoryWrap}>
-            <div>Title: {singleStory.title}</div>
+          <SimpleCard>
+            <div className={classes.singleStoryWrap}>
+              <a
+                href={singleStory.url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <h2>{singleStory.title}</h2>
+              </a>
 
-            <div>Time: {singleStory.time}</div>
+              <div className={classes.InfoWrap}>
+                <div className={classes.InfoItem}>Author: {singleStory.by}</div>
 
-            <div>Url: {singleStory.url}</div>
+                <div className={classes.InfoItem}>
+                  Number of comments: {singleStory.descendants}
+                </div>
 
-            <div>Author: {singleStory.by}</div>
+                <div className={classes.InfoItem}>
+                  Score: {singleStory.score}
+                </div>
+              </div>
 
-            <div>
-              <Link to={"/top-story/" + singleStory.id}>Comments</Link>
+              <div className={classes.CommentsLink}>
+                {singleStory.descendants > 0 ? (
+                  <Link to={singleStory.id + "/comments"}>See comments</Link>
+                ) : (
+                  <div>No comments</div>
+                )}
+              </div>
             </div>
-
-            <div>type: {singleStory.type}</div>
-          </div>
+          </SimpleCard>
         )}
       </div>
     );

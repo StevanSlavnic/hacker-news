@@ -16,7 +16,7 @@ class Comments extends Component {
   }
 
   fetchItem = () => {
-    const id = this.props.location.pathname.split("/").slice(-1)[0];
+    const id = this.props.location.pathname.split("/").slice(-2)[0];
 
     console.log(id);
     storiesService
@@ -32,8 +32,6 @@ class Comments extends Component {
 
   render() {
     const comments = this.state.comments;
-
-    console.log("comments", comments);
 
     const commentsList =
       comments &&
