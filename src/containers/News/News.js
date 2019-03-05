@@ -15,54 +15,23 @@ class News extends Component {
     this.props.fetchData(
       "https://hacker-news.firebaseio.com/v0/newstories.json"
     );
-
-    // this.setState({ items: this.props.items });
   }
 
   render() {
-    const newStories = this.props.items;
 
-    const items = newStories.items;
+    const topStories = this.props.items.items ? this.props.items.items : [];
 
-    console.log("New stories", newStories.items);
+    const storyRender = topStories.slice(0, 20).map(function(item){
+      return <SingleStory key={item} className="items-list-item">
+        {item}
+      </SingleStory>
 
+      
+  })
     return (
       <div>
-        {items}
-        <SingleStory items={this.props.items} />
-        {/* {newStories.map(item => (
-          <SingleStory key={item} id={item} />
-        ))} */}
+        {storyRender}
       </div>
-
-      // <div>
-      //   {!newStories ? (
-      //     <CircularProgress />
-      //   ) : (
-      //     <StoriesList>
-      //       <React.Fragment>
-      //         {newStories &&
-      //           newStories.map(story => {
-      //             return (
-      //               <div key={story.id}>
-      //                 <div>
-      //                   <a href={story.url} target="_blank" rel="noopener">
-      //                     Titile: {story.title}
-      //                   </a>
-      //                 </div>
-      //                 <div>Author: {story.by}</div>
-      //                 <div>
-      //                   Number of comments:{" "}
-      //                   {story.descendants ? story.descendants : "0"}
-      //                 </div>
-      //                 <div>Score: {story.score}</div>
-      //               </div>
-      //             );
-      //           })}
-      //       </React.Fragment>
-      //     </StoriesList>
-      //   )}
-      // </div>
     );
   }
 }
@@ -70,7 +39,6 @@ class News extends Component {
 const mapStateToProps = state => {
   return {
     items: state.items,
-    // hasErrored: state.itemsHasErrored,
     isLoading: state.itemsIsLoading
   };
 };

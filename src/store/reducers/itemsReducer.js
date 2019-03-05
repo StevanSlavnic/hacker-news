@@ -1,4 +1,4 @@
-import _ from "lodash";
+import * as _ from "lodash";
 
 const setItems = (state, payload) => {
   console.log("Will set items data:", payload.items);
@@ -8,7 +8,7 @@ const setItems = (state, payload) => {
   return stateCopy;
 };
 
-const reducer = (state = {}, action) => {
+const reducer = (state = [], action) => {
   switch (action.type) {
     case "ITEMS_FETCH_DATA_SUCCESS":
       return setItems(state, action);

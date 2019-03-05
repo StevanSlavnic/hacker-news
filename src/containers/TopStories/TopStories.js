@@ -5,7 +5,6 @@ import { itemsFetchData } from "../../store/actions/itemsAction";
 
 import CircularProgress from "@material-ui/core/CircularProgress";
 import * as storiesService from "../../services/stories/storiesService";
-import StoriesList from "../../components/ItemsList/ItemsList";
 import SingleStory from "../SingleStory/SingleStory";
 
 class TopStories extends Component {
@@ -18,17 +17,25 @@ class TopStories extends Component {
   }
 
   render() {
-    const topStories = this.props.items;
+    const topStories = this.props.items.items ? this.props.items.items : [];
 
-    const items = topStories.items;
+    // console.log("Top stories",);
 
-    console.log("Top stories", items);
+    const story = topStories.slice(0, 20).map(function(item){
+      return <SingleStory key={item} className="items-list-item">
+        {item}
+      </SingleStory>
+
+      
+  })
+
+  // console.log(Object.values(story.map(item => item.key)))
 
     return (
       <div>
-        {items}
-        {/* {topStories &&
-          topStories.items.map(item => <SingleStory key={item} id={item} />)} */}
+        
+        {story}
+        
       </div>
 
       // <div>
@@ -64,13 +71,13 @@ class TopStories extends Component {
 const mapStateToProps = state => {
   return {
     items: state.items,
-    isLoading: state.itemsIsLoading
+    isLoading: state.itemsIsLoading,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchData: url => dispatch(itemsFetchData(url))
+    fetchData: url => dispatch(itemsFetchData(url)),
   };
 };
 

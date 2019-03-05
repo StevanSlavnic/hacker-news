@@ -1,5 +1,3 @@
-import * as storiesService from "../../services/stories/storiesService";
-
 export function itemsIsLoading(bool) {
   return {
     type: "ITEMS_IS_LOADING",
@@ -17,26 +15,15 @@ export function itemsFetchDataSuccess(items) {
 export function itemsFetchData(url) {
   return dispatch => {
     dispatch(itemsIsLoading(true));
-
-    storiesService
-      .getNewStories(url)
+    fetch(url)
       .then(response => {
-        console.log("Got items data", response.data);
-        dispatch(itemsFetchDataSuccess(response.data));
+        if (!response.ok) {
+          throw Error(response.statusText);
+        }
+        dispatch(itemsIsLoading(false));
+        return response;
       })
-      .catch(error => {
-        console.log(error);
-      });
-
-    // fetch(url)
-    //   .then(response => {
-    //     if (!response.ok) {
-    //       throw Error(response.statusText);
-    //     }
-    //     dispatch(itemsIsLoading(false));
-    //     return response;
-    //   })
-    //   .then(response => response.json())
-    //   .then(items => dispatch(itemsFetchDataSuccess(items)));
+      .then(response => response.json())
+      .then(items => dispatch(itemsFetchDataSuccess(items)));
   };
 }
