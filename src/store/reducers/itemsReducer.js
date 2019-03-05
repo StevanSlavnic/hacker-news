@@ -1,7 +1,7 @@
 import * as _ from "lodash";
 
 const setItems = (state, payload) => {
-  console.log("Will set items data:", payload.items);
+  // console.log("Will set items data:", payload.items);
 
   const stateCopy = _.cloneDeep(state);
   stateCopy.items = payload.items;

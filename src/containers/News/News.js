@@ -18,21 +18,19 @@ class News extends Component {
   }
 
   render() {
+    console.log();
 
-    const topStories = this.props.items.items ? this.props.items.items : [];
+    const newStories = this.props.items.items ? this.props.items.items : [];
 
-    const storyRender = topStories.slice(0, 20).map(function(item){
-      return <SingleStory key={item} className="items-list-item">
-        {item}
-      </SingleStory>
-
-      
-  })
-    return (
-      <div>
-        {storyRender}
-      </div>
-    );
+    const storyRender = () =>
+      newStories.slice(0, 3).map(function(item) {
+        return (
+          <div key={item}>
+            <SingleStory>{item}</SingleStory>
+          </div>
+        );
+      });
+    return <div>{storyRender()}</div>;
   }
 }
 
