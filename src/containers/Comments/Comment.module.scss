@@ -2,11 +2,19 @@
 
 .CommentWrap {
     
-    .Comment {
+    padding: 40px;
+    background-color: $color-white;
+	box-shadow: $shadow-main;
+    margin-bottom: 40px;
 
-    }
+   
 
     .Author {
 
     }
+}
+
+.Comment {
+   
+    width: 100%;
 }

@@ -32,10 +32,12 @@ class SingleStory extends Component {
 
     return (
       <div className={classes.SingleStory}>
-        {!singleStory ? (
-          <CircularProgress />
-        ) : (
-          <SimpleCard>
+        <SimpleCard>
+          {!singleStory.id ? (
+            <div className={classes.ProgressWrap}>
+              <CircularProgress />
+            </div>
+          ) : (
             <div className={classes.singleStoryWrap}>
               <a
                 href={singleStory.url}
@@ -65,8 +67,8 @@ class SingleStory extends Component {
                 )}
               </div>
             </div>
-          </SimpleCard>
-        )}
+          )}
+        </SimpleCard>
       </div>
     );
   }

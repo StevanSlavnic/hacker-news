@@ -4,6 +4,12 @@
     width: 100%;
     position: relative;
 
+    .ProgressWrap {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
+
 }
 
 .singleStoryWrap {
@@ -22,6 +28,7 @@
 
     .InfoWrap {
         display: flex;
+        flex-direction: column;
 
         .InfoItem {
             margin-right: 10px;
