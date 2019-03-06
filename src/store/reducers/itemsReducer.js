@@ -8,7 +8,7 @@ const setItems = (state, payload) => {
   return stateCopy;
 };
 
-const reducer = (state = [], action) => {
+const reducer = (state = {}, action) => {
   switch (action.type) {
     case "ITEMS_FETCH_DATA_SUCCESS":
       return setItems(state, action);
