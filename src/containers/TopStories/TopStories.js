@@ -19,7 +19,7 @@ class TopStories extends Component {
   render() {
     const topStories = this.props.items.items ? this.props.items.items : [];
 
-    const storyRender = topStories.slice(0, 50).map(function(item) {
+    const storyRender = topStories.slice(0, 80).map(function(item) {
       return (
         <div key={item}>
           <SingleStory>{item}</SingleStory>

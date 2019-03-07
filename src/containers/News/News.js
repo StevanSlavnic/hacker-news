@@ -20,7 +20,7 @@ class News extends Component {
     const newStories = this.props.items.items ? this.props.items.items : [];
 
     const storyRender = () =>
-      newStories.slice(0, 50).map(function(item) {
+      newStories.slice(0, 80).map(function(item) {
         return (
           <div key={item}>
             <SingleStory>{item}</SingleStory>
