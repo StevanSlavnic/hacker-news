@@ -1,0 +1,17 @@
+// Media queries
+@mixin mq($type, $rezMin, $rezMax: null) {
+
+	@if ($type == 'from') {
+		@media only screen and (min-width: #{$rezMin}px) { @content; }
+	}
+
+	// ========= TO =========
+	@else if ($type == 'to') {
+			@media only screen and (max-width: #{$rezMin - 1}px) { @content; }
+	}
+
+	// ========= FROM TO =========
+	@else if ($type == 'fromto') {
+		@media only screen and (min-width: #{$rezMin}px) and (max-width: #{$rezMax - 1}px) { @content; }
+	}
+}
