@@ -12,6 +12,7 @@ class SingleStory extends Component {
   }
 
   componentDidMount () {
+    this.mounted = true
     this.fetchItem()
   }
 
@@ -20,11 +21,17 @@ class SingleStory extends Component {
     storiesService
       .getItem(id)
       .then(response => {
-        this.setState({ singleStory: response.data })
+        if (this.mounted) {
+          this.setState({ singleStory: response.data })
+        }
       })
       .catch(error => {
         console.log(error)
       })
+  }
+
+  componentWillUnmount () {
+    this.mounted = false
   }
 
   render () {
