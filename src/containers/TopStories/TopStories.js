@@ -10,6 +10,7 @@ class TopStories extends Component {
   state = {}
 
   componentDidMount () {
+    window.scrollTo(0, 0)
     this.props.fetchData(
       'https://hacker-news.firebaseio.com/v0/topstories.json'
     )
