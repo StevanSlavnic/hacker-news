@@ -15,7 +15,7 @@ const Header = () => {
   return (
     <header id="header" className={classes.Header}>
       <div>
-        <img src={logo} className={classes.Logo} />
+        <img src={logo} className={classes.Logo} alt={"Logo"} />
       </div>
       <nav className={classes.Nav}>{navLinksRender()}</nav>
     </header>
