@@ -1,34 +1,34 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 
-import SimpleCard from "../../components/Card/SimpleCard";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import * as storiesService from "../../services/stories/storiesService";
-import classes from "./SingleStory.module.scss";
+import SimpleCard from '../../components/Card/SimpleCard'
+import CircularProgress from '@material-ui/core/CircularProgress'
+import * as storiesService from '../../services/stories/storiesService'
+import classes from './SingleStory.module.scss'
 
 class SingleStory extends Component {
   state = {
     singleStory: {}
-  };
+  }
 
-  componentDidMount() {
-    this.fetchItem();
+  componentDidMount () {
+    this.fetchItem()
   }
 
   fetchItem = () => {
-    const id = this.props.children;
+    const id = this.props.children
     storiesService
       .getItem(id)
       .then(response => {
-        this.setState({ singleStory: response.data });
+        this.setState({ singleStory: response.data })
       })
       .catch(error => {
-        console.log(error);
-      });
-  };
+        console.log(error)
+      })
+  }
 
-  render() {
-    const singleStory = this.state.singleStory;
+  render () {
+    const singleStory = this.state.singleStory
 
     return (
       <div className={classes.SingleStory}>
@@ -41,8 +41,8 @@ class SingleStory extends Component {
             <div className={classes.singleStoryWrap}>
               <a
                 href={singleStory.url}
-                target="_blank"
-                rel="noopener noreferrer"
+                target='_blank'
+                rel='noopener noreferrer'
               >
                 <h2>{singleStory.title}</h2>
               </a>
@@ -61,7 +61,7 @@ class SingleStory extends Component {
 
               <div className={classes.CommentsLink}>
                 {singleStory.descendants > 0 ? (
-                  <Link to={singleStory.id + "/comments"}>See comments</Link>
+                  <Link to={singleStory.id + '/comments'}>See comments</Link>
                 ) : (
                   <div>No comments</div>
                 )}
@@ -70,8 +70,8 @@ class SingleStory extends Component {
           )}
         </SimpleCard>
       </div>
-    );
+    )
   }
 }
 
-export default SingleStory;
+export default SingleStory

@@ -1,26 +1,23 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import React from 'react'
+import { Link } from 'react-router-dom'
 
-import classes from "./Header.module.scss";
+import classes from './Header.module.scss'
 
 const Header = () => {
   const navLinksRender = () => (
     <React.Fragment>
-      <Link to={"/top-stories"}>Top Stories</Link>
-    </React.Fragment>
-  );
-
-  return (
-    <header id="header" className={classes.Header}>
-      {/* logo */}
-      <Link className={classes.Logo} to={"/news"}>
+       <Link to={'/news'}>
         Hacker News
       </Link>
+      <Link to={'/top-stories'}>Top Stories</Link>
+    </React.Fragment>
+  )
 
-      {/* navigation links */}
+  return (
+    <header id='header' className={classes.Header}>
       <nav className={classes.Nav}>{navLinksRender()}</nav>
     </header>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header

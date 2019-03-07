@@ -1,65 +1,61 @@
-import React, { Component } from "react";
+import React, { Component } from 'react'
 
-import CircularProgress from "@material-ui/core/CircularProgress";
-import * as storiesService from "../../services/stories/storiesService";
-import classes from "./../Comments/Comment.module.scss";
-import Moment from "react-moment";
+import CircularProgress from '@material-ui/core/CircularProgress'
+import * as storiesService from '../../services/stories/storiesService'
+import classes from './../Comments/Comment.module.scss'
+import Moment from 'react-moment'
 
 class Reply extends Component {
   state = {
     reply: {}
-  };
+  }
 
-  componentDidMount() {
-    this.fetchItem();
+  componentDidMount () {
+    this.fetchItem()
   }
 
   fetchItem = () => {
-    const id = this.props.children;
-
-    console.log(id);
+    const id = this.props.children
 
     storiesService
       .getItem(id)
       .then(response => {
-        this.setState({ reply: response.data });
+        this.setState({ reply: response.data })
       })
       .catch(error => {
-        console.log(error);
-      });
-  };
+        console.log(error)
+      })
+  }
 
-  render() {
-    const reply = this.state.reply;
+  render () {
+    const reply = this.state.reply
 
-    console.log(reply);
-
-    function createMarkup() {
-      return { __html: reply.text };
+    function createMarkup () {
+      return { __html: reply.text }
     }
 
     return (
-      <div className={classes.ReplyWrap}>
+      <div>
         {!reply.id ? (
           <CircularProgress />
         ) : (
-          <div>
-            <div>
+          <div className={classes.ReplyWrap}>
+            <div className={classes.ReplyText}>
               {reply.deleted ? (
-                "reply deleted"
+                'reply deleted'
               ) : (
                 <div dangerouslySetInnerHTML={createMarkup()} />
               )}
               <div className={classes.Author}>
-                replied by {reply.by} at
+                Replied by {reply.by} at
                 <Moment unix>{reply.time}</Moment>
               </div>
             </div>
           </div>
         )}
       </div>
-    );
+    )
   }
 }
 
-export default Reply;
+export default Reply
