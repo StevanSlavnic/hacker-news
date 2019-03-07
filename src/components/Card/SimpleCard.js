@@ -9,18 +9,9 @@ const styles = {
     minHeight: 275,
     display: "flex",
     alignItems: "center",
-    padding: "10px 25px"
-  },
-  bullet: {
-    display: "inline-block",
-    margin: "0 2px",
-    transform: "scale(0.8)"
-  },
-  title: {
-    fontSize: 14
-  },
-  pos: {
-    marginBottom: 12
+    padding: "10px 25px",
+    margin: "0 auto",
+    position: "relative"
   }
 };
 
