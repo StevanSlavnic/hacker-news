@@ -6,15 +6,27 @@
     background-color: $color-white;
 	box-shadow: $shadow-main;
     margin-bottom: 40px;
-
-   
-
-    .Author {
-
-    }
+    
+    
 }
 
 .Comment {
-   
     width: 100%;
+}
+
+.CommentText {
+    color: $color-main;
+}
+
+.Author {
+    color: $color-secondary;
+    margin: 20px 0;
+}
+
+.CollapseReplies {
+    cursor: pointer;
+}
+
+.RepliesList {
+    margin-top: 20px;
 }
